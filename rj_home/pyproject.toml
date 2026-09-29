@@ -1,10 +1,8 @@
 [project]
 name = "rj_home"
-version = "0.1.1"
+readme = "README.md"
 authors = [
     { name = "rahul"  }, { name = "jyoshna" }
 ]
  
-
-[project.scripts]
-chaduvukofirst = "core.cli:chaduvukofirst"
+dynamic = ["version"]
