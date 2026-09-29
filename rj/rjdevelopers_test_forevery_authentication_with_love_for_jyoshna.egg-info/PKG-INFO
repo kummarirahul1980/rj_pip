@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: rjdevelopers_test_forevery_authentication_with_love_for_jyoshna
+Version: 0.1.1
+Author: rahul
+Requires-Dist: bcrypt

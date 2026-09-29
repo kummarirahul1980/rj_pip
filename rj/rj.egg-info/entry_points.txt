@@ -1,0 +1,3 @@
+[console_scripts]
+chaduvukofirst = core.cli:chaduvukofirst
+rj_validators = rj.core.cli:cli_test

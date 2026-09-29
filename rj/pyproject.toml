@@ -1,0 +1,13 @@
+[project]
+name = "rj"
+authors = [
+   { name =  "rahul" }
+]
+dependencies = [
+    "bcrypt"
+]
+version = "0.1.1"
+[project.scripts]
+chaduvukofirst = "core.cli:chaduvukofirst"
+rj_validators = "rj.core.cli:cli_test"
+ 

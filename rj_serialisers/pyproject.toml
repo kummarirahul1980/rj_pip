@@ -1,0 +1,7 @@
+[project]
+name = "rj-serialisers"
+version = "0.1.1"
+authors = [
+    { name = "rahul" }
+]
+dependencies = []

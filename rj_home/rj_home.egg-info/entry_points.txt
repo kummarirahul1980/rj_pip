@@ -1,0 +1,2 @@
+[console_scripts]
+chaduvukofirst = core.cli:chaduvukofirst
