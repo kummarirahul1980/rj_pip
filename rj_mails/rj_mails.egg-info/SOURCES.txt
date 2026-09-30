@@ -1,0 +1,8 @@
+pyproject.toml
+rj_mails/__init__.py
+rj_mails/mails.py
+rj_mails.egg-info/PKG-INFO
+rj_mails.egg-info/SOURCES.txt
+rj_mails.egg-info/dependency_links.txt
+rj_mails.egg-info/requires.txt
+rj_mails.egg-info/top_level.txt

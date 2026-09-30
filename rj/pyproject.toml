@@ -4,7 +4,7 @@ authors = [
    { name =  "rahul" }
 ]
 dependencies = [
-    "bcrypt"
+    "bcrypt", "rj-home"
 ]
 version = "0.1.1"
 [project.scripts]

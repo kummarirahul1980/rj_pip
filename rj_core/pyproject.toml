@@ -4,4 +4,4 @@ version = "0.1.1"
 authors = [
     { name = "rahul" }
 ]
-dependencies = ['bcrypt']
+dependencies = ['bcrypt', "rj-home"]

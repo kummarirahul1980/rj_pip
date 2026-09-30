@@ -1,0 +1,12 @@
+pyproject.toml
+rj_apps.egg-info/PKG-INFO
+rj_apps.egg-info/SOURCES.txt
+rj_apps.egg-info/dependency_links.txt
+rj_apps.egg-info/requires.txt
+rj_apps.egg-info/top_level.txt
+rj_apps/django/mails/__init__.py
+rj_apps/django/mails/admin.py
+rj_apps/django/mails/apps.py
+rj_apps/django/mails/models.py
+rj_apps/django/mails/tests.py
+rj_apps/django/mails/migrations/__init__.py

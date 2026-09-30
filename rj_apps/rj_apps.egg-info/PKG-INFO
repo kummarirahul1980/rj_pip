@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: rj-apps
+Version: 0.1.1
+Author: rahul
+Requires-Dist: django
+Requires-Dist: rj-mails

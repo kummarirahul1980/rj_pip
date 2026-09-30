@@ -1,14 +1,22 @@
+UNDEFINED_CODE = object()
+from sys import stderr
 from copy import deepcopy
 import os, smtplib, json, importlib
 from functools import wraps
 from datetime import datetime
 from email.mime.text import MIMEText
 from inspect import signature
-from rj.core.exeptions import ImproperlyConfigured
+from rj.exceptions.mails import ImproperlyConfigured
 from email.message import EmailMessage
-from rj.core.exeptions import RJMailsMIMETypeException
-from . import DEFAULT_SERVERS_AVAILABLE
+from rj.exceptions.mails import RJMailsMIMETypeException
+from rj_mails import DEFAULT_SERVERS_AVAILABLE
 
+LOGGER_WATCH = []
+try :
+    from rj_apps.django.models import EmailLogger
+except ModuleNotFoundError:
+    print("Error importing EmailLogger, please check if rj_apps.django.models is available, with EmailLogger in it. ", file=stderr)
+    EmailLogger =UNDEFINED_CODE
 # PREDEFINING THE GLOBAL VARIABLES TO NONE
 available_server = []
 for i in DEFAULT_SERVERS_AVAILABLE:
@@ -29,7 +37,12 @@ MAIL_SERVER_TYPE = os.environ.get("RJ_MAIL_SERVER_TYPE")
 MAIL_PORT = os.environ.get("RJ_MAIL_PORT")
 MAIL_SERVER = os.environ.get("RJ_MAIL_SERVER")
 
-
+class MailTypeChoices:
+    TEXT="text"
+    HTML="html"
+    OTHER = "other"
+    def __init__(self, choice):
+        self.choice  = choice
 def E_SET_SERVER_AND_PORT(server: str) -> int:
     """
     returns 0 for SUCCESS and 1 or else for unix status of FAILURE
@@ -67,8 +80,10 @@ def CONFIGURE_MAIL_APP():
             message = " Please define the settings credential module RJ_SETTINGS_CONF_MODULE or refer `rjdevelopers mails --help` for more"
             error = ValueError(message)
             raise error
-
-        settings_module = importlib.import_module(SETTINGS_MODULE)
+        try :
+            settings_module = importlib.import_module(SETTINGS_MODULE)
+        except ModuleNotFoundError:
+            raise ImproperlyConfigured("Module '%s' not found. Please Check if settings module ENV value is proper.\n RJ_SETTINGS_CONF_MODULE=%s"%(SETTINGS_MODULE,SETTINGS_MODULE)) from None
         if not hasattr(settings_module, "RJ_SETTINGS_CONF"):
             raise AttributeError(
                 " Please include RJ_SETTINGS_CONF in form of dictionary tree as { 'EMAIL' : { 'APP_PASSWORD' :, 'SENDERS_EMAIL' } }"
@@ -104,12 +119,13 @@ def E_sendmail(
     message,
     subject,
     return_cls=False,
-    mail_type="text",
+    mail_type=MailTypeChoices.TEXT,
     html="",
     *args,
     **kwargs,
 ):
-    if not mail_type in ["html", "text"]:
+    if not hasattr(MailTypeChoices, mail_type):
+
         raise RJMailsMIMETypeException("Mails must be of either html/ or text only.")
     email = EmailMessage()
     email["To"] = reciever_email
@@ -117,12 +133,18 @@ def E_sendmail(
     email["subject"] = subject
 
     email.set_content(message)
-    if mail_type == "html":
+    if mail_type == MailTypeChoices.HTML:
         email.add_alternative(html, subtype="html")
     with smtplib.SMTP(MAIL_SERVER, MAIL_PORT) as server:
         server.starttls()
         server.login(sender_email, app_password)
         server.send_message(email)
+
+        logger_obj = EmailLogger
+        #Handling the Empty email logger.
+        if   EmailLogger is not  UNDEFINED_CODE:
+            LOGGER_WATCH.append(EmailLogger.write_log(sender_email, reciever_email, message, subject,mail_type,html))
+        # UNDEFINED_CODE = "OBJECT_UNDEFINED_CODE_127"
 
     return email if return_cls else "STATUS_SUCCESS"
 
@@ -157,7 +179,7 @@ def E_HTML_sendmail(
         message,
         subject,
         return_cls=return_cls,
-        mail_type="html",
+        mail_type=MailTypeChoices.HTML,
         html=html,
     )
 
