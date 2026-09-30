@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+version.txt
+rj/__init__.py
+rj/__main__.py
+rj/api/__init__.py
+rj/apps/__init__.py
+rj/core/__init__.py
+rj/exceptions/__init__.py
+rj/exceptions/mails.py
+rj/mails/__init__.py
+rj/serialisers/__init__.py
+rj_home.egg-info/PKG-INFO
+rj_home.egg-info/SOURCES.txt
+rj_home.egg-info/dependency_links.txt
+rj_home.egg-info/top_level.txt

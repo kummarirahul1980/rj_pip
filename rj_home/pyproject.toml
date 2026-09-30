@@ -1,8 +1,11 @@
 [project]
-name = "rj_home"
+name = "rj-home"
 readme = "README.md"
 authors = [
     { name = "rahul"  }, { name = "jyoshna" }
 ]
+
  
 dynamic = ["version"]
+[tool.setuptools.dynamic]
+version = { file = "version.txt" }
