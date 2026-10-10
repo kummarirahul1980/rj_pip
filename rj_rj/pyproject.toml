@@ -1,0 +1,8 @@
+[project]
+name = "rj_rj"
+version="0.0.1"
+authors=[
+   {name =  "Kummari Rahul"},{name= "Kummari Jyoshna"}]  
+dependencies = [
+    "rj-core", "rj-mails", "rj-home"
+]

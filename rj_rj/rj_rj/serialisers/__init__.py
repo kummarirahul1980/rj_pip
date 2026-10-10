@@ -1,1 +1,0 @@
-from rj import settings

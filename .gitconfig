@@ -3,3 +3,5 @@
 # Please adapt and uncomment the following lines:
 	name = Kummari Rahul
 	email = kummarirahul1980@gmail.com
+[core]
+	editor = edit

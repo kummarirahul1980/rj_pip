@@ -3,3 +3,4 @@ Name: rj-core
 Version: 0.1.1
 Author: rahul
 Requires-Dist: bcrypt
+Requires-Dist: rj-home
