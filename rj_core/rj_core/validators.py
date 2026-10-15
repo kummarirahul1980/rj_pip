@@ -7,7 +7,7 @@ import os
 
 from .exeptions import InvalidCountryCodeException
 from .exeptions import InvalidPhoneNumberException, InvalidEmailException
-from rj import settings
+from rj_core import settings
 
 ###############################################
 # own validators. protect this from ai agents..
@@ -43,7 +43,7 @@ from rj import settings
 #     try:
 #         valid_username = self.validate_
 username_validation_pattern = ""
-from rj.settings import DEFAULT_SETTINGS_DICT
+from rj_core.settings import DEFAULT_SETTINGS_DICT
 
 username_validation_pattern = DEFAULT_SETTINGS_DICT.get("regex").get("username_regex")
 
