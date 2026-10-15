@@ -1,9 +1,10 @@
-from rj.core.exeptions import IncompleteWritingError
+
+from rj_core.exeptions import IncompleteWritingError
 from pathlib import Path
 from os import path, environ
-from rj import default_settings
-import os, json
-from rj.default_settings import default_json
+from rj_core import default_settings
+import  os, json
+from rj_core.default_settings import default_json
 
 RJ_SETTINGS_HOME_ENV_VAR = default_settings.default_json.get("settings").get(
     "RJ_SETTINGS_HOME"
@@ -30,7 +31,7 @@ BASE_DIR = FILE.resolve().parent
 
 SETTINGS_JSON_PATH = os.path.join(__base_dir__, "rj_settings.json")
 
-from rj.default_settings import default_json
+from rj_core.default_settings import default_json
 
 
 def write_log(log=None, error=None):
@@ -39,7 +40,7 @@ def write_log(log=None, error=None):
     with open(log_path, "a") as logs:
         from datetime import datetime
 
-        log_to_be_written = f" \n\n[ rj logs ] [{datetime.now()}] : \n{log}"
+        log_to_be_written = f" \n\n[ rj_core logs ] [{datetime.now()}] : \n{log}"
         if error:
             log_to_be_written = f"\nError -- {error}\n {log_to_be_written}"
         logs.write(log_to_be_written)
@@ -62,7 +63,7 @@ def clear_logs():
 
 
 def write_settings_json(*args, **kwargs):
-    from rj.default_settings import default_json
+    from rj_core.default_settings import default_json
 
     write_log("Settings json  Initialising...")
     write_log(f"default json :  {default_json}")

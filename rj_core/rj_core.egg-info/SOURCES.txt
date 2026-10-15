@@ -1,4 +1,5 @@
 pyproject.toml
+version.txt
 rj_core/__init__.py
 rj_core/__main__.py
 rj_core/cli.py

@@ -1,7 +1,10 @@
 [project]
 name = "rj-core"
-version = "0.1.1"
+ 
 authors = [
     { name = "rahul" }
 ]
 dependencies = ['bcrypt', "rj-home"]
+dynamic = ["version"]
+[tool.setuptools.dynamic]
+version = { file = "version.txt" }

@@ -1,7 +1,7 @@
 import rj.settings
 
 from rj.settings import *
-from rj.core.helpers import jsonify
+from rj_core.helpers import jsonify
 
 
 def formatted_json_string_literal(JSON):

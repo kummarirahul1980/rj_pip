@@ -4,7 +4,7 @@ import re
 # from django.core.validators import RegexValidator
 # from django.core.exceptions import ValidationError
 import os
-
+from rj_core.helpers import jsonify
 from .exeptions import InvalidCountryCodeException
 from .exeptions import InvalidPhoneNumberException, InvalidEmailException
 from rj_core import settings
@@ -268,3 +268,56 @@ class URLValidator:
     def validate(self, url):
         if isinstance(self, str):
             return
+
+class EmailValidator:
+    def __init__(self,*args):
+        if len(args) == 1:
+            self.email = args[1]
+        else :
+            self.email = None
+            self.email_list = args
+
+    def validate(self):
+        if self.email:
+            return Validators.validate_email(email=self.email)
+        else :
+            true = True
+            valid = []
+            invalid = valid
+            for i in self.email_list:
+                x = i
+                try :
+                    x = Validators.validate_email(email=i)
+                    
+                    valid.append (x)
+                except InvalidEmailException:
+                    invalid.append (x)
+
+
+            return jsonify(valid = valid, invalid = invalid, ___ignore_empty__=True)
+
+    def validate(self, email:str):
+        if isinstance(email, str):
+            return Validators.validate_email(email)
+
+  
+        true = True
+        valid = []
+        invalid = []
+        for i in email:
+            x = i
+            try :
+                x = Validators.validate_email(email=i)
+                valid.append (x)
+            except InvalidEmailException:
+                invalid.append(x)
+                
+
+        return jsonify(valid= valid, invalid=invalid, ___ignore_empty__=True)
+
+    
+        
+
+    def __call__ (self):
+        email = self.email or self.email_list
+        return email if email is not None or email != "" else -1
