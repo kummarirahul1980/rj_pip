@@ -17,7 +17,7 @@ class HomeDirNotSetException(Exception):
     pass
 
 
-__base_dir__ = Path(HOME_DIR).resolve().parent
+__base_dir__ = Path(HOME_DIR).resolve()
 (__base_dir__ / ".rjdevelopers").mkdir(parents=True, exist_ok=True)
 __settings_json_path__ = path.join(__base_dir__, ".rjdevelopers/rj_settings.json")
 
@@ -26,7 +26,7 @@ __settings_json__.touch(exist_ok=True)
 
 
 FILE = Path(__file__)
-BASE_DIR = FILE.resolve().parent
+BASE_DIR = FILE.resolve()
 # SETTINGS_JSON=Path(BASE_DIR).resolve().join("rj_settings.json")
 
 SETTINGS_JSON_PATH = os.path.join(__base_dir__, "rj_settings.json")

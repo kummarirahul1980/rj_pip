@@ -1,9 +1,18 @@
-from sys import stderr, modules
+from sys import stderr, modules,exit
+
+
+
 from importlib import import_module
 class RJModuleNotFoundException (Exception):
    def __init__(self, message, *args):
       self.message = message
       super().__init__(message,*args)
+
+if "-h" in sys.argv or "--help":
+   print("The rj home acts as as a translation layer between rj_core like apps starting with rj_*, translating it to under single namespace, rj.* , allowing to just import single namespace and could able to access the complete rj system using single namespace. Yet the project is intended under developement, and now wworking. This would be resolved in future updates. Please contact github.com/kummarirahul1980 or wait fo rupdates.")
+   print("With regards,  RJ DEVELOPERS TEAM Cheif")
+   print("Rahul")
+raise RJModuleNotFoundException("The module rj_home is not ready yet. Will be ready soon .please wait for future updates.")
 try :
    from rj.AVAILABLE_MODULES import APPS
 

@@ -1,7 +1,11 @@
 [project]
-name = "rj-api"
-version = "0.1.1"
+name = "rj-api" 
 authors = [
     { name = "rahul" }
 ]
 dependencies = ["rj-home"]
+
+
+dynamic = ["version"]
+[tool.setuptools.dynamic]
+version = { file = "version.txt" }

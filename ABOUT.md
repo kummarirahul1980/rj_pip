@@ -99,7 +99,7 @@ RJ should make development shorter without making the underlying code mysterious
 
 **Use only what you need.**
 
-A project using `rj.core` does not automatically need:
+A project using `rj_core` does not automatically need:
 
     rj.mails
     rj.apps
@@ -292,7 +292,7 @@ Start with ordinary Python and add whichever RJ components are useful:
                            │
              ┌─────────────┼─────────────┐
              │             │             │
-          rj.core       rj.mails       rj.apps
+          rj_core       rj.mails       rj.apps
              │             │             │
         helpers &       mail        application
         validators     services       modules
@@ -306,14 +306,14 @@ Start with ordinary Python and add whichever RJ components are useful:
 For example, all of these are valid:
 
     🐍 Python
-    └── rj.core
+    └── rj_core
 
     🐍 Python
-    ├── rj.core
+    ├── rj_core
     └── rj.mails
 
     🌐 Django
-    ├── rj.core
+    ├── rj_core
     ├── rj.mails
     ├── rj.apps
     └── Your project code

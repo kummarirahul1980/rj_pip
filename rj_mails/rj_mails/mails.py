@@ -6,11 +6,18 @@ from functools import wraps
 from datetime import datetime
 from email.mime.text import MIMEText
 from inspect import signature
-from rj.exceptions.mails import ImproperlyConfigured
+# from rj.exceptions.mails import ImproperlyConfigured
 from email.message import EmailMessage
-from rj.exceptions.mails import RJMailsMIMETypeException
+# from rj.exceptions.mails import RJMailsMIMETypeException
 from rj_mails import DEFAULT_SERVERS_AVAILABLE
 
+class ImproperlyConfigured(Exception):
+    def __init__(self,module,  message = "The module is improperly configured. Please wait till next update.  ::: ", *args):
+        message +=module
+        super().__init__(*args)
+class RJMailsMIMETypeException(Exception):
+    def __init__(self,message = "Invalid Mime type selectred. please select the proper mimne type", *args):
+        super().__init__(message,*args)
 LOGGER_WATCH = []
 try :
     from rj_apps.django.models import EmailLogger
@@ -69,7 +76,7 @@ def E_SET_SERVER_AND_PORT(server: str) -> int:
 
 def CONFIGURE_MAIL_APP():
     global APP_EMAIL, APP_PASSWORD, MAIL_SERVER_TYPE, MAIL_PORT, MAIL_SERVER
-    if not APP_EMAIL or not APP_PASSWORD or MAIL_SERVER_TYPE:
+    if not APP_EMAIL and APP_PASSWORD and MAIL_PORT and MAIL_SERVER:
         SETTINGS_MODULE_KEYWORD = (
             os.environ.get("DEFAULT_PROJECT_SETTINGS_KEYWORD")
             or "RJ_SETTINGS_CONF_MODULE"
@@ -99,7 +106,7 @@ def CONFIGURE_MAIL_APP():
             raise ImproperlyConfigured("Please select the server type.")
 
 
-CONFIGURE_MAIL_APP()
+ 
 
 
 def RUN_APP_PASSWORD_CHECK():
@@ -184,29 +191,41 @@ def E_HTML_sendmail(
     )
 
 
-def E_THREAD_sendmail(*args, return_thread=False, **kwargs):
+def E_THREAD_sendmail(*args, return_thread=False, start_thread = True, **kwargs):
     from threading import Thread
 
     sig = signature(E_sendmail)
     sig.bind(*args, **kwargs)
     t = Thread(target=E_sendmail, args=args, kwargs=kwargs)
-    t.start()
+    
+    if start_thread:
+        t.start()
+        return t
+    
     return None if not return_thread else t
 
 
 def sendmail(reciever_mail, text, subject="", return_cls=False):
-
+    CONFIGURE_MAIL_APP()
     return E_sendmail(
         APP_EMAIL, APP_PASSWORD, reciever_mail, text, subject, return_cls=return_cls
     )
 
 
 def send_template_mail(*args, **kwargs):
+    CONFIGURE_MAIL_APP()
     args = (APP_EMAIL, APP_PASSWORD, *args)
     sig = signature(E_HTML_sendmail)
     sig.bind(*args, **kwargs)
     return E_HTML_sendmail(*args, **kwargs)
 
+def THREAD_sendmail(*args, return_thread=False,start_thread = True, **kwargs):
+    from threading import Thread
+    sig = signature(sendmail)
+    sig.bind(*args, **kwargs)
+
+    t = Thread(target=sendmail, args = args, kwargs=kwargs)
+    t.start()
 
 html_TEmplate = """
 <!DOCTYPE html>

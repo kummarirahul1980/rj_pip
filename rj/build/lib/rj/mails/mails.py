@@ -4,9 +4,9 @@ from functools import wraps
 from datetime import datetime
 from email.mime.text import MIMEText
 
-from rj.core.exeptions import ImproperlyConfigured
+from rj_core.exeptions import ImproperlyConfigured
 from email.message import EmailMessage
-from rj.core.exeptions import RJMailsMIMETypeException
+from rj_core.exeptions import RJMailsMIMETypeException
 from . import DEFAULT_SERVERS_AVAILABLE
 
 # PREDEFINING THE GLOBAL VARIABLES TO NONE
