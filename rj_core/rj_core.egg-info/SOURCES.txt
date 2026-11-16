@@ -4,7 +4,7 @@ rj_core/__init__.py
 rj_core/__main__.py
 rj_core/cli.py
 rj_core/default_settings.py
-rj_core/exeptions.py
+rj_core/exceptions.py
 rj_core/helpers.py
 rj_core/modules.py
 rj_core/save_data.py
@@ -15,3 +15,4 @@ rj_core.egg-info/SOURCES.txt
 rj_core.egg-info/dependency_links.txt
 rj_core.egg-info/requires.txt
 rj_core.egg-info/top_level.txt
+rj_core/tests/test_helpers.py

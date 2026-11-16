@@ -1,5 +1,5 @@
 
-from rj_core.exeptions import IncompleteWritingError
+from rj_core.exceptions import IncompleteWritingError
 from pathlib import Path
 from os import path, environ
 from rj_core import default_settings

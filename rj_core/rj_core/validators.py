@@ -5,8 +5,8 @@ import re
 # from django.core.exceptions import ValidationError
 import os
 from rj_core.helpers import jsonify
-from .exeptions import InvalidCountryCodeException
-from .exeptions import InvalidPhoneNumberException, InvalidEmailException
+from .exceptions import InvalidCountryCodeException
+from .exceptions import InvalidPhoneNumberException, InvalidEmailException
 from rj_core import settings
 
 ###############################################
@@ -106,14 +106,15 @@ class Validators:
                 return None
         elif len(args) > 1 and (isinstance(args, tuple) or isinstance(args, list)):
 
-            returnargs = []
+            validusers  = []
+            invalidusers = []
             for i in args:
                 if username_regex.fullmatch(i):
-                    returnargs.append(i)
+                    validusers.append(i)
                 else:
-                    print("Invalid username.%s" % (i))
+                    invalidusers.append(i)
 
-            return returnargs
+            return { "valid" : validusers, "invalid" : invalidusers}
 
     @property
     def valid_username(self):
@@ -148,7 +149,7 @@ class Validators:
                 phone_no = phone[-10:]
                 country_code = phone[:-10]
         if country_code == "" or country_code is None:
-            print("Warning : Default country code : IN +91")
+            
             country_code = "+91"
         for i in str(phone_no):
             # print("Forloop executed.")
@@ -166,7 +167,7 @@ class Validators:
             if country_code.startswith("+") and len(str(country_code)) < 2:
                 raise InvalidCountryCodeException
             elif not country_code.startswith("+") and len(phone) > 10:
-                print(phone, "  :  ", len(phone))
+            
                 raise InvalidPhoneNumberException(
                     "Phone number shouldnot Exceed 10 digits with countrycode mentioned as +ccph"
                 )
