@@ -1,5 +1,7 @@
 import os
 
+NONE="__NONE__"
+
 default_json = {
     "env_file": os.environ.get("HOME/.rjdevelopers"),
     "regex": {
@@ -9,7 +11,7 @@ default_json = {
     },
     "api": {"API_SIGNATURE": {"start": "Rj-Api", "end": "RJ-end"}},
     "settings": {
-        "RJ_SETTINGS_HOME": os.environ.get("HOME"),
-        "DEFAULT_HOME": os.environ.get("HOME"),
+        "RJ_SETTINGS_HOME": os.environ.get("HOME","__NONE__"),
+        "DEFAULT_HOME": os.environ.get("HOME","__NONE__"),
     },
 }

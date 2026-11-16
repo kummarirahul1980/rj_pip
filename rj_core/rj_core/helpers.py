@@ -1,3 +1,4 @@
+
 # def jsonify(update={}, *args: dict, **kwargs) -> dict:
 #     # update = {}
 #     for i in args:
@@ -42,7 +43,7 @@
 import json
 
 
-def jsonify(*args, ___ignore_empty__=False, **kwargs) -> dict:
+def jsonify(*args, ___ignore_empty__=False,__positional_dict_args__=False, **kwargs) -> dict:
     result = {}
 
     def is_valid(val):
@@ -56,20 +57,29 @@ def jsonify(*args, ___ignore_empty__=False, **kwargs) -> dict:
         return True
 
     # 1. Process positional arguments
+    
+    subresult = {"args" : []}
+    def posargs(): return __positional_dict_args__
     for item in args:
         if isinstance(item, dict):
             for key, val in item.items():
                 if is_valid(val):
-                    result[key] = val
+                    item[key] = val
+                
+            if __positional_dict_args__ == True:
+                subresult["args"].append(item)
+            else :
+                subresult.update(item)
         else:
             if is_valid(item):
-                result.setdefault("args", []).append(item)
-
+                subresult["args"].append(item)
     # 2. Process keyword arguments
+    
+    kwargs.update(subresult)
     for key, val in kwargs.items():
         if is_valid(val):
             result[key] = val
-
+  
     return result
 
 

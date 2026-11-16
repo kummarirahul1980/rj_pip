@@ -4,10 +4,11 @@ from pathlib import Path
 from os import path, environ
 from rj_core import default_settings
 import  os, json
-from rj_core.default_settings import default_json
+from rj_core.default_settings import default_json, NONE
+
 
 RJ_SETTINGS_HOME_ENV_VAR = default_settings.default_json.get("settings").get(
-    "RJ_SETTINGS_HOME"
+    "RJ_SETTINGS_HOME", "HOME"
 )
 DEFAULT_HOME = default_settings.default_json.get("settings").get("DEFAULT_HOME")
 HOME_DIR = environ.get(RJ_SETTINGS_HOME_ENV_VAR, DEFAULT_HOME)
@@ -16,7 +17,24 @@ HOME_DIR = environ.get(RJ_SETTINGS_HOME_ENV_VAR, DEFAULT_HOME)
 class HomeDirNotSetException(Exception):
     pass
 
+import os, tempfile
+import tempfile
 
+
+
+if not HOME_DIR:
+    raise HomeDirNotSetException("Please set Home variable")
+else :
+    print ("Type of HOME_DIR : ", type(HOME_DIR))
+    print (HOME_DIR)
+
+if DEFAULT_HOME == NONE:
+    DEFAULT_HOME = tempfile.gettempdir()
+if HOME_DIR == NONE:
+    HOME_DIR = tempfile.gettempdir()
+
+print("Type of HOme dir : " ,type (HOME_DIR))
+print (HOME_DIR)
 __base_dir__ = Path(HOME_DIR).resolve()
 (__base_dir__ / ".rjdevelopers").mkdir(parents=True, exist_ok=True)
 __settings_json_path__ = path.join(__base_dir__, ".rjdevelopers/rj_settings.json")
